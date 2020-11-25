@@ -1,4 +1,4 @@
-# IEEE_CIS_Comp
+# IEEE-CIS TECHNICAL CHALLENGE ON ENERGY PREDICTION FROM SMART METER DATA
 This repository contains the experiments we performed for IEEE CIS Technical Challenge 2020 to compute the monthly energy consumption of 3248 homes.
 
 # Instructions for Execution
