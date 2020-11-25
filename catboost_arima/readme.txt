@@ -1,4 +1,4 @@
-Before executing the run_arima.sh command, make sure to download the below 
+Before executing the run_arima_catboost.sh command, make sure to download the below 
 files from: https://drive.google.com/drive/folders/12yNLdFA-PD7QUjCy2kthFWpSac8EU3B4?usp=sharing
 
 # df_train.feather
