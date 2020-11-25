@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # install R packages.
-python ./catboost_arima/install_packages.R
+Rscript ./catboost_arima/install_packages.R
 
 # install python packages.
 python ./catboost_arima/install_packages.py
