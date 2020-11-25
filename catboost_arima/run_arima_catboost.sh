@@ -6,7 +6,7 @@ python ./catboost_arima/install_packages.R
 # install python packages.
 python ./catboost_arima/install_packages.py
 
-# run CatBoostModel.ipynb.
+# run CatBoostModel.py.
 python ./catboost_arima/CatBoostModel.py
 
 # run ARIMA_Catboost.R
