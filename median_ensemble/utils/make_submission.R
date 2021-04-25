@@ -1,12 +1,15 @@
 num_of_days <- c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 
 # Aggregate daily forecasts into monthly level
-make_submission <- function(forecasts, output_file_name, meter_ids = NULL){
-  if(is.null(meter_ids))
-    final_forecasts <- cbind(all_ids)
-  else
-    final_forecasts <- cbind(meter_ids)
-  
+make_submission <- function(forecasts, output_file_name, meter_ids = NULL, need_meter_id = TRUE){
+  if(need_meter_id){
+    if(is.null(meter_ids))
+      final_forecasts <- cbind(all_ids)
+    else
+      final_forecasts <- cbind(meter_ids)
+  }else
+    final_forecasts <- NULL
+ 
   for(d in 1:length(num_of_days)){
     if(d == 1){
       start_day <- 1
@@ -22,7 +25,10 @@ make_submission <- function(forecasts, output_file_name, meter_ids = NULL){
     final_forecasts <- cbind(final_forecasts, final_month_forecasts)
   }
   
-  colnames(final_forecasts) <- c("meter_id",	"Jan",	"Feb",	"Mar",	"Apr",	"May",	"Jun",	"Jul",	"Aug",	"Sep",	"Oct",	"Nov",	"Dec")
+  if(need_meter_id)
+    colnames(final_forecasts) <- c("meter_id",	"Jan",	"Feb",	"Mar",	"Apr",	"May",	"Jun",	"Jul",	"Aug",	"Sep",	"Oct",	"Nov",	"Dec")
+  else
+    colnames(final_forecasts) <- c("Jan",	"Feb",	"Mar",	"Apr",	"May",	"Jun",	"Jul",	"Aug",	"Sep",	"Oct",	"Nov",	"Dec")
   
   write.csv(final_forecasts, file.path(FORECAST_DIR, "sub-models", output_file_name), row.names = F)
 }

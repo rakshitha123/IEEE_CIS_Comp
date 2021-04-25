@@ -1,12 +1,30 @@
 # Forecast with different lags
-start_forecasting <- function(dataset, lag, forecast_horizon, model_type = "pooled_regression", feature_names = NULL, future_features = NULL, other_features = NULL){
+start_forecasting <- function(dataset, lag, forecast_horizon, model_type = "pooled_regression", feature_names = NULL, future_features = NULL, other_features = NULL, test_set = NULL){
   # Create embedded matrix for training models and the first test set
   result <- create_input_matrix(dataset, lag, model_type, feature_names, future_features, other_features)
 
   embedded_series <- result[[1]]
   final_lags <- result[[2]]
   series_means <- result[[3]]
+  
+  if(!is.null(test_set)){
+    test_set <- test_set[,lag:1]
+    
+    indx <- 1:lag
+    test_set[indx] <- lapply(test_set[indx], function(x) as.numeric(x))
+    
+    if(!is.null(future_features)){
+      test_set <- cbind(test_set, data.frame(matrix(rep(future_features[1, feature_names], nrow(test_set)), nrow = nrow(test_set), ncol = length(feature_names), byrow = T)))
 
+      indx <- (lag+1):ncol(test_set)
+      test_set[indx] <- lapply(test_set[indx], function(x) as.factor(x))
+    }
+    
+    test_set <- as.data.frame(test_set)   
+    colnames(test_set) <- colnames(final_lags)
+    final_lags <- test_set
+  }
+  
   fit_model(embedded_series, lag, final_lags, forecast_horizon, series_means, dataset, model_type, feature_names, future_features, other_features)
 }
 
